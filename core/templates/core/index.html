@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لیست سوالات</title>
+    <style>
+        body {
+            font-family: 'Vazir', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            direction: rtl;
+            text-align: right;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .question-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .question-title {
+            font-size: 1.5em;
+            color: #007bff;
+        }
+        .question-date {
+            font-size: 0.9em;
+            color: #888;
+        }
+        .question-text {
+            margin-top: 10px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .read-more {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .read-more:hover {
+            text-decoration: underline;
+        }
+        .pagination {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .pagination span, .pagination a {
+            margin: 0 5px;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .pagination a:hover {
+            background-color: #0056b3;
+        }
+        .pagination .current {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>لیست سوالات</h1>
+
+        {% for question in object_list %}
+        <div class="question-item">
+            <div class="question-title">{{ question.title }}</div>
+            <div class="question-date">{{ question.date }}</div>
+            <div class="question-text">{{ question.text|truncatewords:30 }}</div>
+            <a href="{% url 'question_detail' question.id %}" class="read-more">ادامه مطلب</a>
+
+        </div>
+        {% endfor %}
+
+        <div class="pagination">
+            {% if is_paginated %}
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; اول</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">قبلی</a>
+                    {% endif %}
+                    <span class="current">
+                        صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">بعدی</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">آخر &raquo;</a>
+                    {% endif %}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

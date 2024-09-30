@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ question.title }}</title>
+    <style>
+        body {
+            font-family: 'Vazir', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            direction: rtl;
+            text-align: right;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .question-title {
+            font-size: 2em;
+            color: #007bff;
+        }
+
+        .question-date {
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        .question-text {
+            margin-top: 20px;
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+
+        .answers-section {
+            margin-top: 40px;
+        }
+
+        .answer-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .answer-text {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .answer-lawyer {
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="question-header">
+        <h1 class="question-title">{{ question.title }}</h1>
+        <p class="question-date">{{ question.date }}</p>
+    </div>
+    <div class="question-text">
+        {{ question.text }}
+    </div>
+
+    <div class="answers-section">
+        <h2>پاسخ‌ها:</h2>
+        {% for answer in question.answers.all %}
+            <div class="answer-item">
+                <p class="answer-text">{{ answer.text }}</p>
+                <p class="answer-lawyer">
+                    پاسخ توسط:
+                    <a href="{% url 'lawyer_detail' answer.lawyer.id %}">{{ answer.lawyer.name }}</a>
+                    - شهر: {{ answer.lawyer.city }}
+                </p>
+
+            </div>
+        {% empty %}
+            <p>هیچ پاسخی هنوز برای این سوال ثبت نشده است.</p>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
